@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include "LRUCache.h"
+#include "../include/LRUCache.h"
 
 int main()
 {

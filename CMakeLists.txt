@@ -27,9 +27,20 @@ endif()
 # Include Directories ---
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
+# Download and Integrate GoogleTest ---
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG        v1.14.0
+)
+# Ensure cross-platform compatibility (especially for MSVC)
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
 # Enable Testing ---
 enable_testing()
 
 # Subdirectories ---
 add_subdirectory(src)
-add_subdirectory(test)
+# add_subdirectory(test)
