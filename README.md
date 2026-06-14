@@ -1,26 +1,40 @@
-# Thread-Safe LRU Cache
+# Advanced Concurrent Systems in C++
 
-A high-performance, thread-safe Least Recently Used (LRU) Cache implemented in native C++ using STL containers. This project demonstrates synchronization patterns, focusing on thread safety under concurrent read and write operations.
+Welcome to my repository dedicated to low-level system design and high-performance concurrent components in Modern C++. This repository serves as a portfolio of production-grade, thread-safe data structures and resource management utilities designed for low-latency systems.
 
-## 🚀 Features
-- **$O(1)$ Operations:** Fast lookups, insertions, and evictions using `std::unordered_map` and `std::list`.
-- **Thread Safety:** Implemented using modern C++ concurrency primitives (`std::mutex`, `std::unique_lock`).
-- **Header-Only / Easy Integration:** Designed as a generic template class supporting arbitrary key-value types.
+## 🛠️ Projects Overview
 
-## 🛠️ Architecture & Technical Decisions
-- **Data Structures:** - `std::list<std::pair<Key, Value>>` to track elements from Most Recently Used (front) to Least Recently Used (back).
-  - `std::unordered_map<Key, typename std::list<...>::iterator>` for constant-time lookups to elements inside the linked list.
-- **Concurrency Strategy:** - *Current Status:* Uses a global lock (`std::mutex`) with `std::unique_lock` to ensure strict mutual exclusion across both `get()` and `put()` operations.
-  - *Note on Readers-Writer Optimization:* Because a standard LRU `get()` operation modifies the internal ordering of the linked list (moving the accessed element to the front), a simple `std::shared_lock` (read-lock) is insufficient on its own without data races. Future iterations may explore cache sharding/segmentation or deferred list updates to optimize read throughput.
+This repository contains isolated, highly modular projects. Each project is self-contained with its own implementation, headers, and build configuration.
 
-## 📋 Requirements
-- C++14 (or higher) compliant compiler (e.g., GCC, Clang, MSVC)
-- CMake (version 3.10 or higher)
+### 1. [Thread-Safe LRU Cache](./projects/lru-cache)
 
-## 🔧 Building and Running
+A highly efficient, concurrent Least Recently Used (LRU) cache template class.
 
-### Build Instructions
+- **Core Concepts:** Hash maps, Doubly Linked Lists, Fine-grained Locking (`std::mutex`), Template Meta-programming.
+- **Use Case:** Fast, key-value lookups with automated item eviction in highly multi-threaded application environments.
+
+### 2. [Concurrent Connection Pool](./projects/connection-pool)
+
+A robust resource manager designed to multiplex and reuse expensive network/database connections among worker threads.
+
+- **Core Concepts:** Resource allocation tracking, Resource Acquisition Is Initialization (RAII), Move semantics (`std::unique_ptr`), FIFO synchronization.
+- **Use Case:** Preventing thread-creation overhead and socket exhaustion in heavy backend network architectures.
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- A modern C++ compiler supporting **C++17** or higher (GCC, Clang, or MSVC)
+- CMake (version 3.10+)
+
+### Building the Workspace
+
+To build all projects simultaneously from the root directory:
+
 ```bash
 mkdir build && cd build
 cmake ..
-cmake --build .
+make
+```
