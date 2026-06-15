@@ -28,4 +28,9 @@ public:
         availableConnections.pop();
         return conn;
     }
+
+    void releaseConnection(std::unique_ptr<Connection> conn)
+    {
+        availableConnections.push(std::move(conn));
+    }
 };

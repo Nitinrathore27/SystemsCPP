@@ -12,5 +12,9 @@ int main()
     auto conn2 = myPool.acquireConnection();
     if (conn2)
         conn2->executeQuery("INSERT INTO orders VALUES (1, 'Book');"s);
+
+    myPool.releaseConnection(std::move(conn1)); // ownership moves BACK into the queue
+    myPool.releaseConnection(std::move(conn2)); // ownership moves BACK into the queue
+
     return 0;
 }
