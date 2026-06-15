@@ -22,7 +22,7 @@ public:
         if (availableConnections.empty())
         {
             std::cout << "No available connections. Please wait.\n";
-            return nullptr;
+            return std::unique_ptr<Connection>{};;
         }
         auto conn = std::move(availableConnections.front());
         availableConnections.pop();
