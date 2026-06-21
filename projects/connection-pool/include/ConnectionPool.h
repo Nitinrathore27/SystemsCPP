@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 #include <queue>
 #include <memory>
@@ -22,7 +24,8 @@ public:
         if (availableConnections.empty())
         {
             std::cout << "No available connections. Please wait.\n";
-            return std::unique_ptr<Connection>{};;
+            return std::unique_ptr<Connection>{};
+            ;
         }
         auto conn = std::move(availableConnections.front());
         availableConnections.pop();
